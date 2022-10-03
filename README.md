@@ -30,6 +30,12 @@ mvn clean package
 
 This will generate a shaded JAR that can be picked up by the following steps.
 
+Downloading the OTel agent jar
+
+```shell
+wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
+```
+
 For the OTel agent, it will need to be manually copied into the `target/` directory, like this:
 
 ```shell
