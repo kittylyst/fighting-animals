@@ -10,8 +10,14 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
 
+    <spring-boot.version>2.7.0</spring-boot.version>
+    <micrometer.version>1.9.3</micrometer.version>
+
+    <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+
     <google-java-format.version>1.15.0</google-java-format.version>
     <spotless-maven-plugin.version>2.29.0</spotless-maven-plugin.version>
+    <skip.spotless>false</skip.spotless>
   </properties>
 
   <dependencyManagement>
@@ -19,26 +25,32 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
-        <version>2.7.0</version>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-core</artifactId>
+        <version>${micrometer.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>${maven-assembly-plugin.version}</version>
       </dependency>
 
-      <dependency>
-        <groupId>com.diffplug.spotless</groupId>
-        <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.29.0</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-core</artifactId>
     </dependency>
   </dependencies>
   <build>
