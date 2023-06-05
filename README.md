@@ -2,10 +2,16 @@
 
 ## Description
 
-This project provides a simple structure to demonstrate distributed traces.
+This project provides a simple structure to demonstrate Observability (especially distributed traces).
 
-Simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a 
-battle that looks like this:
+There are several branches:
+
+* main - no Observability
+* micrometer_only - Micrometer Metrics only
+* manual_tracing - OTel Tracing using manual spans
+* auto_otel - Use of the OTel Java agent to trace automatically
+
+The system of microserives simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
 
 Output:
 
@@ -14,8 +20,7 @@ Output:
 "evil": <animal1>
 }
 
-Each low-level service contains a simple `GET /getAnimal` route, and top-level service calls one of the low-level services
-application's `GET /getAnimal` route for each side (chosen randomly).
+Each low-level service contains a simple `GET /getAnimal` route, and top-level service calls one of the low-level services application's `GET /getAnimal` route for each side (chosen randomly).
 
 The routes are as follows:
 
