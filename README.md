@@ -11,7 +11,7 @@ There are several branches:
 * manual_tracing - OTel Tracing using manual spans
 * auto_otel - Use of the OTel Java agent to trace automatically
 
-The system of microserives simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
+The system of microservices simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
 
 Output:
 
