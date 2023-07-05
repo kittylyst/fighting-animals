@@ -12,6 +12,7 @@
 
     <google-java-format.version>1.15.0</google-java-format.version>
     <spotless-maven-plugin.version>2.29.0</spotless-maven-plugin.version>
+    <slf4j-api.version>2.0.7</slf4j-api.version>
   </properties>
 
   <dependencyManagement>
@@ -20,6 +21,17 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
         <version>2.7.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j-api.version}</version>
       </dependency>
 
       <dependency>

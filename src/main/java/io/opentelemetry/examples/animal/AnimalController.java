@@ -7,12 +7,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AnimalController {
+  private static Logger LOGGER = LoggerFactory.getLogger(AnimalController.class);
+
   private static final Map<String, String> SERVICES =
       Map.of(
           "mammals", "http://mammal-service:8081/getAnimal",
@@ -29,8 +34,10 @@ public class AnimalController {
   }
 
   private String fetchRandomAnimal() throws IOException, InterruptedException {
+    var pause = (int) (SERVICES.size() * Math.random());
+    LOGGER.info("Pausing for: "+ pause);
     List<String> keys = List.copyOf(SERVICES.keySet());
-    var world = keys.get((int) (SERVICES.size() * Math.random()));
+    var world = keys.get(pause);
     var location = SERVICES.get(world);
 
     return fetchAnimal(world, location);
