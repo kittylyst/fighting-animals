@@ -4,7 +4,7 @@
 
 This project provides a simple structure to demonstrate distributed traces.
 
-Simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a 
+Simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a
 battle that looks like this:
 
 Output:
@@ -62,6 +62,3 @@ docker-compose up
 The deploy/target/ directory will need to be created, owned by root:root and must be writeable by group.
 If you don't do this, Grafana will fail to deploy.
 To fix this, do a `sudo chmod -R 775 target`
-
-Spring Boot appears to stop recognizing the `--server.port` argument when run with the OTel Java Agent.
-Switching to remapped ports instead.

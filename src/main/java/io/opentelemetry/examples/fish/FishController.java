@@ -1,14 +1,14 @@
+/* (C)2022-2023 */
 package io.opentelemetry.examples.fish;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
+import java.io.IOException;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class FishController {
@@ -28,6 +28,6 @@ public class FishController {
     // Random pause
     Thread.sleep((int) (20 * Math.random()));
     // Return random fish
-    return FISH.get((int)(FISH.size() * Math.random()));
+    return FISH.get((int) (FISH.size() * Math.random()));
   }
 }

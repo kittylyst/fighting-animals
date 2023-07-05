@@ -1,22 +1,23 @@
+/* (C)2023 */
 package io.opentelemetry.examples.animal;
+
+import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AnimalController {
-  private static final Map<String, String> SERVICES = Map.of(
+  private static final Map<String, String> SERVICES =
+      Map.of(
           "mammals", "http://mammal-service:8081/getAnimal",
           "fish", "http://fish-service:8083/getAnimal");
 
@@ -37,7 +38,7 @@ public class AnimalController {
     var good = fetchRandomAnimal();
     var evil = fetchRandomAnimal();
     battlesTotal.incrementAndGet();
-    return "{ \"good\": \""+ good + "\", \"evil\": \""+ evil + "\" }";
+    return "{ \"good\": \"" + good + "\", \"evil\": \"" + evil + "\" }";
   }
 
   private String fetchRandomAnimal() throws IOException, InterruptedException {
@@ -47,5 +48,4 @@ public class AnimalController {
 
     return fetchAnimal(location);
   }
-
 }
