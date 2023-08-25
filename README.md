@@ -51,11 +51,15 @@ That is, the tag name should match the contents of `docker-compose.yml`
 
 ## Running the project
 
-In the deploy directory are a docker-compose YAML file and a collector config.
+In the `deploy/` directory are a docker-compose YAML file and a collector config.
 
 ```shell
 docker-compose up
 ```
+
+The entrypoint service can then be hit on `:8080`
+
+The Jaeger instance is available on `:16686`
 
 ## Known Issues
 
