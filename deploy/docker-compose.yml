@@ -1,43 +1,15 @@
 version: "2"
 services:
 
-  # Prometheus
-  prom:
-    container_name: prometheus
-    image: prom/prometheus
-    command:
-      - "--config.file=/config/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
-      - "--web.console.templates=/usr/share/prometheus/consoles"
-    ports:
-      - "9090:9090"
-    user: "65534:0"
-    volumes:
-      - './config:/config'
-      - './target/data/prometheus:/prometheus'
-
-  # Grafana
-  grafana:
-    container_name: grafana
-    image: grafana/grafana-oss:9.1.2-ubuntu
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_PATHS_CONFIG=/config/grafana.ini
-    user: "472:0"
-    volumes:
-      - './config:/config'
-      - './target/data/grafana:/var/lib/grafana'
-      - './target/logs/grafana:/var/log/grafana'
-
   # Jaeger
   jaeger-all-in-one:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:1.47
     ports:
       - "16686:16686"
+      - "7134:4317"
       - "14268"
       - "14250"
+    # Ports are host:container
 
   # Collector
   otel-collector:
@@ -51,7 +23,6 @@ services:
       - "55681:55681" # OTLP HTTP receiver alternative port
     depends_on:
       - jaeger-all-in-one
-      - prom
 
   # Fish service
   fish-service:

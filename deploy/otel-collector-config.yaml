@@ -8,21 +8,10 @@ exporters:
   logging:
 #    loglevel: debug
 
+  # Send to native OTLP Jaeger receiver
   jaeger:
-    endpoint: 'jaeger-all-in-one:14250'
+    endpoint: 'jaeger-all-in-one:7134'
     insecure: true
-
-  # Expect metrics like process.runtime.jvm.threads.count from OTel auto-instrument
-  prometheus:
-    endpoint: "otel-collector:7878"
-    namespace: /animals-metrics
-#    const_labels:
-#      label1: value1
-#      'another label': spaced value
-    send_timestamps: true
-    metric_expiration: 180m
-    resource_to_telemetry_conversion:
-      enabled: true
 
 processors:
   batch:
@@ -37,7 +26,3 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [jaeger]
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [logging,prometheus]
