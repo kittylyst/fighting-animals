@@ -4,6 +4,7 @@ package io.opentelemetry.examples.animal;
 import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
 
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class AnimalController {
   public AnimalController(MeterRegistry registry) {
     this.registry = registry;
     this.battlesTotal = this.registry.gauge("battles.total", new AtomicInteger(0));
+    new ProcessorMetrics().bindTo(this.registry);
   }
 
   @GetMapping("/battle")
