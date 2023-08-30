@@ -9,7 +9,7 @@ exporters:
 #    loglevel: debug
 
   # Send to native OTLP Jaeger receiver
-  jaeger:
+  otlp:
     endpoint: 'jaeger-all-in-one:7134'
     insecure: true
 
@@ -25,4 +25,4 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [jaeger]
+      exporters: [otlp]
