@@ -6,7 +6,6 @@ services:
     image: jaegertracing/all-in-one:1.47
     ports:
       - "16686:16686"
-      - "7134:4317"
       - "14268"
       - "14250"
     # Ports are host:container
