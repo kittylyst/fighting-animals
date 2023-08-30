@@ -4,5 +4,5 @@ RUN mkdir /app
 COPY animals-demo-1.0-SNAPSHOT-jar-with-dependencies.jar  /app
 COPY opentelemetry-javaagent.jar  /app
 WORKDIR /app
-CMD ["java", "-javaagent:opentelemetry-javaagent.jar", "-cp" , "animals-demo-1.0-SNAPSHOT-jar-with-dependencies.jar", "-Dotel.exporter.otlp.endpoint=http://otel-collector:55681/", "-Dotel.service.name=mustelid-app", "io.opentelemetry.examples.mustelid.MustelidApplication", "--server.port=8084"]
+CMD ["java", "-javaagent:opentelemetry-javaagent.jar", "-cp" , "animals-demo-1.0-SNAPSHOT-jar-with-dependencies.jar", "-Dotel.exporter.otlp.protocol=http/protobuf", "-Dotel.exporter.otlp.endpoint=http://otel-collector:55681/", "-Dotel.service.name=mustelid-app", "io.opentelemetry.examples.mustelid.MustelidApplication", "--server.port=8084"]
 
