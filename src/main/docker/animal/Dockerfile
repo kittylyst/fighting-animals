@@ -6,4 +6,4 @@ COPY animals-demo-1.0-SNAPSHOT-jar-with-dependencies.jar  /app
 COPY opentelemetry-javaagent.jar  /app
 WORKDIR /app
 # -Dotel.metrics.exporter=logging
-CMD ["java", "-javaagent:opentelemetry-javaagent.jar", "-cp" , "animals-demo-1.0-SNAPSHOT-jar-with-dependencies.jar", "-Dotel.exporter.otlp.protocol=http/protobuf", "-Dotel.exporter.otlp.endpoint=http://otel-collector:55681/", "-Dotel.service.name=animal-app", "io.opentelemetry.examples.animal.AnimalApplication"]
+CMD ["java", "-javaagent:opentelemetry-javaagent.jar", "-cp" , "animals-demo-1.0-SNAPSHOT-jar-with-dependencies.jar", "-Dotel.exporter.otlp.endpoint=otel-collector:4317", "-Dotel.service.name=animal-app", "io.opentelemetry.examples.animal.AnimalApplication"]
