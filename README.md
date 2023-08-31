@@ -9,7 +9,9 @@ There are several branches:
 * main - no Observability
 * micrometer_only - Micrometer Metrics only
 * manual_tracing - OTel Tracing using manual spans
-* auto_otel - Use of the OTel Java agent to trace automatically
+* auto_tracing_only - Use of the OTel Java agent to trace automatically
+* logging_only - 
+* auto_otel - 
 
 The system of microservices simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
 
