@@ -3,14 +3,10 @@ package io.opentelemetry.examples.animal;
 
 import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
 
-import io.micrometer.core.instrument.MeterRegistry;
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,22 +18,13 @@ public class AnimalController {
           "fish", "http://fish-service:8083/getAnimal");
 
   private static final HttpServletRequestExtractor EXTRACTOR = new HttpServletRequestExtractor();
-  private final AtomicInteger battlesTotal;
 
-  @Autowired private HttpServletRequest httpServletRequest;
-
-  private final MeterRegistry registry;
-
-  public AnimalController(MeterRegistry registry) {
-    this.registry = registry;
-    this.battlesTotal = registry.gauge("battles.total", new AtomicInteger(0));
-  }
+  public AnimalController() {}
 
   @GetMapping("/battle")
   public String makeBattle() throws IOException, InterruptedException {
     var good = fetchRandomAnimal();
     var evil = fetchRandomAnimal();
-    battlesTotal.incrementAndGet();
     return "{ \"good\": \"" + good + "\", \"evil\": \"" + evil + "\" }";
   }
 
