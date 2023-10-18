@@ -1,6 +1,7 @@
 /* Copyright (C) Red Hat 2023 */
 package io.opentelemetry.examples.feline;
 
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
@@ -17,9 +18,12 @@ public class FelineController {
   @Autowired private HttpServletRequest httpServletRequest;
 
   private final MeterRegistry registry;
+  private final Counter numCombatants;
 
   public FelineController(MeterRegistry registry) {
     this.registry = registry;
+    this.numCombatants =
+        Counter.builder("battles.combatants").tag("type", "feline").register(this.registry);
     new ProcessorMetrics().bindTo(this.registry);
     new JvmMemoryMetrics().bindTo(this.registry);
   }
@@ -28,6 +32,7 @@ public class FelineController {
   public String makeBattle() throws InterruptedException {
     // Random pause
     Thread.sleep((int) (20 * Math.random()));
+    numCombatants.increment();
     // Return random cat
     return CATS.get((int) (CATS.size() * Math.random()));
   }

@@ -31,10 +31,6 @@ public class AnimalController {
   public AnimalController(MeterRegistry registry) {
     this.registry = registry;
     this.battlesTotal = this.registry.counter("battles.total");
-    //    this.battlesTotal = Counter
-    //            .builder("battles.total")
-    //            .description("Total number of battle fought")
-    //            .register(this.registry);
     // These next two lines switch on CPU & memory metrics for delivery through Micrometer
     new ProcessorMetrics().bindTo(this.registry);
     new JvmMemoryMetrics().bindTo(this.registry);
