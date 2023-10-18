@@ -3,6 +3,9 @@ package io.opentelemetry.examples.mammal;
 
 import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
+import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,14 @@ public class MammalController {
           "felines", "http://feline-service:8085/getAnimal");
 
   @Autowired private HttpServletRequest httpServletRequest;
+
+  private final MeterRegistry registry;
+
+  public MammalController(MeterRegistry registry) {
+    this.registry = registry;
+    new ProcessorMetrics().bindTo(this.registry);
+    new JvmMemoryMetrics().bindTo(this.registry);
+  }
 
   @GetMapping("/getAnimal")
   public String makeBattle() throws IOException, InterruptedException {
