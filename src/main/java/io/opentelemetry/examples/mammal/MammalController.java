@@ -39,11 +39,7 @@ public class MammalController {
   }
 
   @GetMapping("/getAnimal")
-  public String makeBattle() throws IOException, InterruptedException {
-    return fetchRandomAnimal();
-  }
-
-  private String fetchRandomAnimal() throws IOException, InterruptedException {
+  public String getAnimal() throws IOException, InterruptedException {
     List<String> keys = List.copyOf(SERVICES.keySet());
     var id = (int) (SERVICES.size() * Math.random());
     if (id == 0) {

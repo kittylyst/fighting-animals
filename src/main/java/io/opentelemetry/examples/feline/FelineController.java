@@ -29,7 +29,7 @@ public class FelineController {
   }
 
   @GetMapping("/getAnimal")
-  public String makeBattle() throws InterruptedException {
+  public String getAnimal() throws InterruptedException {
     // Random pause
     Thread.sleep((int) (20 * Math.random()));
     numCombatants.increment();
