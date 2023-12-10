@@ -1,7 +1,7 @@
 /* Copyright (C) Red Hat 2023 */
 package io.opentelemetry.examples.utils;
 
-public class FelinePercent extends Number {
+public final class FelinePercent extends Number {
   private double value;
 
   public FelinePercent(double v) {

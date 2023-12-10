@@ -24,6 +24,7 @@ public class FelineController {
     this.registry = registry;
     this.numCombatants =
         Counter.builder("battles.combatants").tag("type", "feline").register(this.registry);
+
     new ProcessorMetrics().bindTo(this.registry);
     new JvmMemoryMetrics().bindTo(this.registry);
   }
