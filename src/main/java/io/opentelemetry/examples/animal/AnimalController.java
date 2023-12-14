@@ -35,10 +35,8 @@ public class AnimalController {
   public AnimalController(MeterRegistry registry) {
     this.registry = registry;
     this.battlesTotal = this.registry.counter("battles.total");
-    this.responseTimer = Timer
-            .builder("response.time")
-            .description("Response time")
-            .register(registry);
+    this.responseTimer =
+        Timer.builder("response.time").description("Response time").register(registry);
 
     // These next two lines switch on CPU & memory metrics for delivery through Micrometer
     new ProcessorMetrics().bindTo(this.registry);
@@ -47,12 +45,13 @@ public class AnimalController {
 
   @GetMapping("/battle")
   public String makeBattle() throws Exception {
-    Callable<String> callable = () -> {
-      // Send the two requests and return the response body as the response
-      var good = fetchRandomAnimal();
-      var evil = fetchRandomAnimal();
-      return "{ \"good\": \"" + good + "\", \"evil\": \"" + evil + "\" }";
-    };
+    Callable<String> callable =
+        () -> {
+          // Send the two requests and return the response body as the response
+          var good = fetchRandomAnimal();
+          var evil = fetchRandomAnimal();
+          return "{ \"good\": \"" + good + "\", \"evil\": \"" + evil + "\" }";
+        };
     battlesTotal.increment();
     return responseTimer.recordCallable(callable);
   }
