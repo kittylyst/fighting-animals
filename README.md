@@ -6,10 +6,14 @@ This project provides a simple structure to demonstrate Observability (especiall
 
 There are several branches:
 
-* main - no Observability
-* micrometer_only - Micrometer Metrics only
-* manual_tracing - OTel Tracing using manual spans
-* auto_otel - Use of the OTel Java agent to trace automatically
+* `main` - no Observability
+* `micrometer_only` - Micrometer Metrics only (Logging Exporter)
+* `micrometer_with_prom` - Micrometer Metrics with Prometheus
+* `manual_tracing` - OTel Tracing using manual spans
+* `auto_tracing_only` - Use of the OTel Java agent to trace automatically
+* `auto_otel` - All OTel
+
+This document covers the `micrometer_with_prom` branch.
 
 The system of microserives simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
 
@@ -35,12 +39,6 @@ mvn clean spotless:apply package
 
 This will generate a shaded JAR that can be picked up by the following steps.
 
-For the OTel agent, it will need to be manually copied into the `target/` directory, like this:
-
-```shell
-cp opentelemetry-javaagent.jar target/
-```
-
 The project is deployed using Docker. Each separate subcomponent needs a separate container, they are built like this:
 
 ```
@@ -53,10 +51,9 @@ docker build -t mustelid_demo -f src/main/docker/mustelid/Dockerfile target/
 
 That is, the tag name should match the contents of `docker-compose.yml`
 
-
 ## Running the project
 
-In the deploy directory are a docker-compose YAML file and a collector config.
+In the deploy directory are a docker-compose YAML file and some Prometheus config.
 
 ```shell
 docker-compose up
@@ -64,9 +61,3 @@ docker-compose up
 
 ## Known Issues
 
-The deploy/target/ directory will need to be created, owned by root:root and must be writeable by group.
-If you don't do this, Grafana will fail to deploy.
-To fix this, do a `sudo chmod -R 775 target`
-
-Spring Boot appears to stop recognizing the `--server.port` argument when run with the OTel Java Agent.
-Switching to remapped ports instead.
