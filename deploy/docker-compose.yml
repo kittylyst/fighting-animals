@@ -1,13 +1,22 @@
 version: "2"
 services:
 
-  # Jaeger
-  jaeger-all-in-one:
-    image: jaegertracing/all-in-one:latest
+  # Prometheus
+  prom:
+    container_name: prometheus
+    image: prom/prometheus
+    command:
+      - "--config.file=/config/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
     ports:
-      - "16686:16686"
-      - "14268"
-      - "14250"
+      - "9090:9090"
+    user: "65534:0"
+    volumes:
+      - './config:/config'
+      - './target/data/prometheus:/prometheus'
+
   # Collector
   otel-collector:
     image: otel/opentelemetry-collector:latest
@@ -19,7 +28,7 @@ services:
       - "4317:4317"   # OTLP gRPC receiver
       - "55681:55681" # OTLP HTTP receiver alternative port
     depends_on:
-      - jaeger-all-in-one
+      - prom
 
   # Fish service
   fish-service:

@@ -30,7 +30,7 @@ The routes are as follows:
 To build the project, use:
 
 ```shell
-mvn clean package
+mvn clean spotless:apply package
 ```
 
 This will generate a shaded JAR that can be picked up by the following steps.

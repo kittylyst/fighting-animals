@@ -8,10 +8,6 @@ exporters:
   logging:
 #    loglevel: debug
 
-  jaeger:
-    endpoint: 'jaeger-all-in-one:14250'
-    insecure: true
-
   # Expect metrics like process.runtime.jvm.threads.count from OTel auto-instrument
   prometheus:
     endpoint: "otel-collector:7878"
@@ -33,10 +29,6 @@ extensions:
 service:
   extensions: [health_check]
   pipelines:
-    traces:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [jaeger]
     metrics:
       receivers: [otlp]
       processors: [batch]
