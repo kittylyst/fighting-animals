@@ -11,7 +11,7 @@
     <maven.compiler.target>17</maven.compiler.target>
 
     <spring-boot.version>2.7.0</spring-boot.version>
-    <micrometer.version>1.9.3</micrometer.version>
+    <micrometer.version>1.12.1</micrometer.version>
 
     <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
 
@@ -27,9 +27,15 @@
         <artifactId>spring-boot-starter-web</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
+
       <dependency>
         <groupId>io.micrometer</groupId>
         <artifactId>micrometer-core</artifactId>
+        <version>${micrometer.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-prometheus</artifactId>
         <version>${micrometer.version}</version>
       </dependency>
 
@@ -52,6 +58,13 @@
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-core</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
   </dependencies>
   <build>
 
