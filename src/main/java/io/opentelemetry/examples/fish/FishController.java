@@ -5,7 +5,9 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +16,8 @@ public class FishController {
   private static final List<String> FISH = List.of("salmon", "cod", "turbot");
 
   private final Counter numCombatants;
+
+  @Autowired private HttpServletRequest httpServletRequest;
 
   private final MeterRegistry registry;
 
