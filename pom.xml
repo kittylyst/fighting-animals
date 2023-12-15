@@ -19,7 +19,7 @@
     <google-java-format.version>1.15.0</google-java-format.version>
     <spotless-maven-plugin.version>2.29.0</spotless-maven-plugin.version>
     <skip.spotless>false</skip.spotless>
-    <spring.boot.mainclass>io.opentelemetry.examples.animal.AnimalApplication</spring.boot.mainclass>
+    <spring.boot.mainclass>io.opentelemetry.examples.Runner</spring.boot.mainclass>
   </properties>
 
   <dependencies>
