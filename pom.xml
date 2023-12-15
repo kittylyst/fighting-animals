@@ -7,7 +7,6 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.2.0</version>
     <relativePath></relativePath>
-    <!-- lookup parent from repository -->
   </parent>
 
   <groupId>io.opentelemetry.examples</groupId>
@@ -16,9 +15,7 @@
 
   <properties>
     <java.version>17</java.version>
-
     <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
-
     <google-java-format.version>1.15.0</google-java-format.version>
     <spotless-maven-plugin.version>2.29.0</spotless-maven-plugin.version>
     <skip.spotless>false</skip.spotless>
@@ -34,18 +31,15 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-
     <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-prometheus</artifactId>
       <scope>runtime</scope>
     </dependency>
-
   </dependencies>
   <build>
 
     <plugins>
-
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -56,7 +50,6 @@
           <mainClass>${spring.boot.mainclass}</mainClass>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
