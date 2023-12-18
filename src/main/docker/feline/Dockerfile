@@ -3,5 +3,5 @@ USER root
 RUN mkdir /app
 COPY target/animals-demo-1.0-SNAPSHOT.jar  /app
 WORKDIR /app
-CMD ["java", "-jar" , "animals-demo-1.0-SNAPSHOT.jar", "io.opentelemetry.examples.feline.FelineApplication", "--server.port=8085"]
+CMD ["java", "-cp" , "animals-demo-1.0-SNAPSHOT.jar", "-Dloader.main=io.opentelemetry.examples.feline.FelineApplication", "org.springframework.boot.loader.launch.PropertiesLauncher", "--server.port=8085"]
 
