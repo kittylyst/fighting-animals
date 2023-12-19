@@ -25,9 +25,37 @@ scrape_configs:
   - targets:
     - localhost:9090
 
-- job_name: animals
-  metrics_path: /metrics
+- job_name: animal
+  metrics_path: /actuator/prometheus
   scrape_interval: 5s
   static_configs:
     - targets:
-      - otel-collector:7878
+      - animal-service:8080
+
+- job_name: feline
+  metrics_path: /actuator/prometheus
+  scrape_interval: 5s
+  static_configs:
+    - targets:
+        - feline-service:8085
+
+- job_name: fish
+  metrics_path: /actuator/prometheus
+  scrape_interval: 5s
+  static_configs:
+    - targets:
+        - fish-service:8083
+
+- job_name: mammal
+  metrics_path: /actuator/prometheus
+  scrape_interval: 5s
+  static_configs:
+    - targets:
+        - mammal-service:8081
+
+- job_name: mustelid
+  metrics_path: /actuator/prometheus
+  scrape_interval: 5s
+  static_configs:
+    - targets:
+      - mustelid-service:8084
