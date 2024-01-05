@@ -4,11 +4,11 @@ package io.opentelemetry.examples.fish;
 import static io.opentelemetry.examples.utils.Misc.extractContext;
 import static io.opentelemetry.examples.utils.Misc.serverSpan;
 
+import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,14 @@ public class FishController {
   private static final HttpServletRequestExtractor EXTRACTOR = new HttpServletRequestExtractor();
   private static final List<String> FISH = List.of("salmon", "cod", "turbot");
 
-  @Autowired private HttpServletRequest httpServletRequest;
+  private final HttpServletRequest httpServletRequest;
+
+  private final OpenTelemetry sdk;
+
+  public FishController(HttpServletRequest httpServletRequest, OpenTelemetry sdk) {
+    this.httpServletRequest = httpServletRequest;
+    this.sdk = sdk;
+  }
 
   @GetMapping("/getAnimal")
   public String makeBattle() throws IOException, InterruptedException {
@@ -30,6 +37,7 @@ public class FishController {
       // Start a span in the scope of the extracted context.
       var span =
           serverSpan(
+              sdk,
               "/getAnimal",
               HttpMethod.GET.name(),
               FishController.class.getName(),
