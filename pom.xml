@@ -31,14 +31,26 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+
     <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
-      <scope>runtime</scope>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk-extension-autoconfigure</artifactId>
+      <version>1.33.0</version>
+    </dependency>
+
+    <!--    <dependency>-->
+    <!--      <groupId>io.opentelemetry</groupId>-->
+    <!--      <artifactId>opentelemetry-sdk</artifactId>-->
+    <!--      <version>1.33.0</version>-->
+    <!--    </dependency>-->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk-metrics</artifactId>
+      <version>1.33.0</version>
     </dependency>
   </dependencies>
-  <build>
 
+  <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
