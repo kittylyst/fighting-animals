@@ -38,10 +38,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-actuator</artifactId>-->
+    <!--    </dependency>-->
 
     <dependency>
       <groupId>io.opentelemetry</groupId>
@@ -55,17 +55,14 @@
       <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-sdk-metrics</artifactId>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>io.opentelemetry</groupId>-->
-    <!--      <artifactId>opentelemetry-exporter-logging</artifactId>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      &lt;!&ndash; Not managed by opentelemetry-bom &ndash;&gt;-->
-    <!--      <groupId>io.opentelemetry.semconv</groupId>-->
-    <!--      <artifactId>opentelemetry-semconv</artifactId>-->
-    <!--      <version>1.23.1-alpha</version>-->
-    <!--    </dependency>-->
-
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk-extension-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-otlp</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
