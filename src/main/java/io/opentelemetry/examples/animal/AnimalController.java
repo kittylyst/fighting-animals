@@ -4,8 +4,10 @@ package io.opentelemetry.examples.animal;
 import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
 
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
+import io.opentelemetry.api.metrics.ObservableDoubleGauge;
 import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdk;
 import java.io.IOException;
 import java.util.List;
@@ -20,18 +22,23 @@ public class AnimalController {
           "mammals", "http://mammal-service:8081/getAnimal",
           "fish", "http://fish-service:8083/getAnimal");
 
-  public static final String INSTRUMENTATION_SCOPE = "io.opentelemetry.example.metrics";
+  public static final String INSTRUMENTATION_SCOPE = "io.opentelemetry.examples.animal";
 
-  private final Meter meter;
+  private final Meter appMeter;
+  private final Meter memoryMeter;
   private final LongCounter battlesTotal;
+  private final ObservableDoubleGauge cpuTotal;
 
   public AnimalController() {
     OpenTelemetry sdk = AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();
-    Meter meter = sdk.getMeter(INSTRUMENTATION_SCOPE);
-    this.meter = meter;
-    battlesTotal = createCounter(meter);
-    //    this.responseTimer =
-    //        Timer.builder("response.time").description("Response time").register(registry);
+
+    Meter appMeter = sdk.getMeter(INSTRUMENTATION_SCOPE + ".app");
+    this.appMeter = appMeter;
+    this.battlesTotal = createCounter(appMeter);
+
+    Meter memoryMeter = sdk.getMeter(INSTRUMENTATION_SCOPE + ".memory");
+    this.memoryMeter = memoryMeter;
+    this.cpuTotal = createGauge(memoryMeter);
   }
 
   static LongCounter createCounter(Meter meter) {
@@ -40,6 +47,15 @@ public class AnimalController {
         .setDescription("Counts total battles fought.")
         .setUnit("unit")
         .build();
+  }
+
+  static ObservableDoubleGauge createGauge(Meter meter) {
+    return meter
+        .gaugeBuilder("jvm.memory.total")
+        .setDescription("Reports JVM memory usage.")
+        .setUnit("byte")
+        .buildWithCallback(
+            result -> result.record(Runtime.getRuntime().totalMemory(), Attributes.empty()));
   }
 
   @GetMapping("/battle")
