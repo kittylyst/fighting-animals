@@ -1,8 +1,8 @@
 /* Copyright (C) Red Hat 2024 */
 package io.opentelemetry.examples.fish;
 
-import static io.opentelemetry.examples.utils.OpenTelemetryConfig.extractContext;
-import static io.opentelemetry.examples.utils.OpenTelemetryConfig.serverSpan;
+import static io.opentelemetry.examples.utils.Misc.extractContext;
+import static io.opentelemetry.examples.utils.Misc.serverSpan;
 
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
 import jakarta.servlet.http.HttpServletRequest;

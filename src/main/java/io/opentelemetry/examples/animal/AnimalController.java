@@ -2,10 +2,11 @@
 package io.opentelemetry.examples.animal;
 
 import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
-import static io.opentelemetry.examples.utils.OpenTelemetryConfig.*;
+import static io.opentelemetry.examples.utils.Misc.serverSpan;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
+import io.opentelemetry.examples.utils.Misc;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +31,7 @@ public class AnimalController {
   public String makeBattle() throws IOException, InterruptedException {
     // Extract the propagated context from the request. In this example, no context will be
     // extracted from the request since this route initializes the trace.
-    var extractedContext = extractContext(httpServletRequest, EXTRACTOR);
+    var extractedContext = Misc.extractContext(httpServletRequest, EXTRACTOR);
 
     try (var scope = extractedContext.makeCurrent()) {
       // Start a span in the scope of the extracted context.
