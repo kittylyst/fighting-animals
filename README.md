@@ -2,10 +2,21 @@
 
 ## Description
 
-This project provides a simple structure to demonstrate distributed traces.
+This project provides a simple structure to demonstrate Observability (especially distributed traces).
 
-Simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a 
-battle that looks like this:
+There are several branches:
+
+* `main` - no Observability
+* `micrometer_only` - Micrometer Metrics only (Logging Exporter)
+* `micrometer_with_prom` - Micrometer Metrics with Prometheus
+* `manual_tracing` - OTel Tracing using manual spans
+* `auto_tracing_only` - Use of the OTel Java agent to trace automatically
+* `otel_metrics_raw_api` - OTel Metrics using the raw API
+* `auto_otel` - All OTel
+
+This document covers the `otel_metrics_raw_api` branch.
+
+The system of microserives simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
 
 Output:
 
@@ -14,18 +25,16 @@ Output:
 "evil": <animal1>
 }
 
-Each low-level service contains a simple `GET /getAnimal` route, and top-level service calls one of the low-level services
-application's `GET /getAnimal` route for each side (chosen randomly).
+Each low-level service contains a simple `GET /getAnimal` route, and top-level service calls one of the low-level services application's `GET /getAnimal` route for each side (chosen randomly).
 
 The routes are as follows:
-
 
 ## Building the project
 
 To build the project, use:
 
 ```shell
-mvn clean package
+mvn clean spotless:apply package
 ```
 
 This will generate a shaded JAR that can be picked up by the following steps:
@@ -53,6 +62,3 @@ docker-compose up
 
 ## Known Issues
 
-The deploy/target/ directory will need to be created, owned by root:root and must be writeable by group.
-If you don't do this, Grafana will fail to deploy.
-To fix this, do a `sudo chmod -R 775 target`
