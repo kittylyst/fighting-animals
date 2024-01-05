@@ -8,10 +8,10 @@ import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.metrics.ObservableDoubleGauge;
-import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdk;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +24,15 @@ public class AnimalController {
 
   public static final String INSTRUMENTATION_SCOPE = "io.opentelemetry.examples.animal";
 
+  @Autowired private OpenTelemetry sdk;
+
   private final Meter appMeter;
   private final Meter memoryMeter;
   private final LongCounter battlesTotal;
   private final ObservableDoubleGauge cpuTotal;
 
   public AnimalController() {
-    OpenTelemetry sdk = AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();
+    //    OpenTelemetry sdk = AutoConfiguredOpenTelemetrySdk.getOpenTelemetrySdk();
 
     Meter appMeter = sdk.getMeter(INSTRUMENTATION_SCOPE + ".app");
     this.appMeter = appMeter;
