@@ -2,11 +2,13 @@ version: "2"
 services:
 
   # Jaeger
+  # Local GRPC port (4317) needs to be remapped to appear as 14317
+  # to avoid a clash with the OTel collector's GRPC port
   jaeger-all-in-one:
     image: jaegertracing/all-in-one:1.52.0
     ports:
       - "16686:16686"
-      - "4317:4317"   # OTLP gRPC receiver
+      - "14317:4317"   # OTLP gRPC receiver
       - "4318:4318"   # OTLP HTTP receiver
   # Collector
   otel-collector:

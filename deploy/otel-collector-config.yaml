@@ -6,7 +6,7 @@ receivers:
 
 exporters:
   jaeger:
-    endpoint: jaeger-all-in-one:4317
+    endpoint: jaeger-all-in-one:14317
     insecure: true
 
 processors:
