@@ -5,11 +5,8 @@ receivers:
       http:
 
 exporters:
-  logging:
-#    loglevel: debug
-
-processors:
-  batch:
+  debug:
+    verbosity: detailed
 
 extensions:
   health_check:
@@ -19,5 +16,4 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
-      processors: [batch]
-      exporters: [logging]
+      exporters: [debug]
