@@ -22,6 +22,17 @@
     <spring.boot.mainclass>io.opentelemetry.examples.animal.AnimalApplication</spring.boot.mainclass>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-bom</artifactId>
+        <version>1.33.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -34,20 +45,27 @@
 
     <dependency>
       <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-sdk-extension-autoconfigure</artifactId>
-      <version>1.33.0</version>
+      <artifactId>opentelemetry-api</artifactId>
     </dependency>
-
-    <!--    <dependency>-->
-    <!--      <groupId>io.opentelemetry</groupId>-->
-    <!--      <artifactId>opentelemetry-sdk</artifactId>-->
-    <!--      <version>1.33.0</version>-->
-    <!--    </dependency>-->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-sdk-metrics</artifactId>
-      <version>1.33.0</version>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>io.opentelemetry</groupId>-->
+    <!--      <artifactId>opentelemetry-exporter-logging</artifactId>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      &lt;!&ndash; Not managed by opentelemetry-bom &ndash;&gt;-->
+    <!--      <groupId>io.opentelemetry.semconv</groupId>-->
+    <!--      <artifactId>opentelemetry-semconv</artifactId>-->
+    <!--      <version>1.23.1-alpha</version>-->
+    <!--    </dependency>-->
+
   </dependencies>
 
   <build>
