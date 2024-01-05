@@ -5,8 +5,6 @@ receivers:
       http:
 
 exporters:
-  logging:
-
   jaeger:
     endpoint: jaeger-all-in-one:14250
     insecure: true
