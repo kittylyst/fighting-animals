@@ -11,6 +11,7 @@ There are several branches:
 * `micrometer_with_prom` - Micrometer Metrics with Prometheus
 * `manual_tracing` - OTel Tracing using manual spans
 * `auto_tracing_only` - Use of the OTel Java agent to trace automatically
+* `otel_metrics_raw_api` - OTel Metrics using the raw API
 * `auto_otel` - All OTel
 
 This document covers the `micrometer_with_prom` branch.
