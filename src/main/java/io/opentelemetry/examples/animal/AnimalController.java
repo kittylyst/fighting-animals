@@ -1,9 +1,8 @@
-/* (C)2023 */
+/* Copyright (C) Red Hat 2023-2024 */
 package io.opentelemetry.examples.animal;
 
 import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
 
-import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,6 @@ public class AnimalController {
       Map.of(
           "mammals", "http://mammal-service:8081/getAnimal",
           "fish", "http://fish-service:8083/getAnimal");
-
-  private static final HttpServletRequestExtractor EXTRACTOR = new HttpServletRequestExtractor();
 
   public AnimalController() {}
 

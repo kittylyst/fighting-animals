@@ -1,4 +1,4 @@
-/* (C)2022-2023 */
+/* Copyright (C) Red Hat 2022-2024 */
 package io.opentelemetry.examples.animal;
 
 import org.springframework.boot.SpringApplication;
