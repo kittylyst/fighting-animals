@@ -2,17 +2,18 @@ version: "2"
 services:
 
   # Jaeger
+  # Local GRPC port (4317) needs to be remapped to appear as 14317
+  # to avoid a clash with the OTel collector's GRPC port
   jaeger-all-in-one:
-    image: jaegertracing/all-in-one:1.47
+    image: jaegertracing/all-in-one:1.52.0
     ports:
       - "16686:16686"
-      - "14268"
-      - "14250"
-    # Ports are host:container
+      - "14317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver
 
   # Collector
   otel-collector:
-    image: otel/opentelemetry-collector:0.84.0
+    image: otel/opentelemetry-collector:0.91.0
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
