@@ -6,4 +6,5 @@ COPY opentelemetry-javaagent.jar  /app
 WORKDIR /app
 # -Dmanagement.otlp.metrics.export.url=http://otel-collector:4317/
 # -Dotel.exporter.otlp.endpoint=http://otel-collector:4317/
-CMD ["java", "-javaagent:opentelemetry-javaagent.jar", "-Dotel.traces.exporter=none", "-Dmanagement.otlp.metrics.export.url=http://otel-collector:4317/", "-Dotel.service.name=animal-app", "-jar" , "animals-demo-1.0-SNAPSHOT.jar"]
+# "-Dmanagement.otlp.metrics.export.url=http://otel-collector:4317/",
+CMD ["java", "-Dotel.traces.exporter=none", "-Dotel.service.name=animal-app", "-jar" , "animals-demo-1.0-SNAPSHOT.jar"]
