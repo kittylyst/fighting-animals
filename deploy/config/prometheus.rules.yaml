@@ -1,5 +1,0 @@
-groups:
-  - name: recording_rules
-    rules:
-#      - record: instance_attacks:round_attacks:rate15m
-#        expr: rate(round_attacks_count[15m])
