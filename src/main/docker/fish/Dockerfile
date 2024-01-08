@@ -6,4 +6,4 @@ COPY opentelemetry-javaagent.jar  /app
 WORKDIR /app
 # -Dotel.exporter.otlp.endpoint.url=http://otel-collector:4317/
 # -Dotel.exporter.otlp.endpoint=http://otel-collector:4317/
-CMD ["java", "-javaagent:opentelemetry-javaagent.jar", "-cp" , "animals-demo-1.0-SNAPSHOT.jar", "-Dotel.traces.exporter=none", "-Dotel.exporter.otlp.endpoint.url=http://otel-collector:4317/", "-Dotel.service.name=fish-app", "-Dloader.main=io.opentelemetry.examples.fish.FishApplication", "org.springframework.boot.loader.launch.PropertiesLauncher", "--server.port=8083"]
+CMD ["java", "-javaagent:opentelemetry-javaagent.jar", "-cp" , "animals-demo-1.0-SNAPSHOT.jar", "-Dotel.traces.exporter=none", "-Dmanagement.otlp.metrics.export.url=http://otel-collector:4317/", "-Dotel.service.name=fish-app", "-Dloader.main=io.opentelemetry.examples.fish.FishApplication", "org.springframework.boot.loader.launch.PropertiesLauncher", "--server.port=8083"]
