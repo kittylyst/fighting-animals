@@ -1,4 +1,4 @@
-/* Copyright (C) Red Hat 2023 */
+/* Copyright (C) Red Hat 2023-2024 */
 package io.opentelemetry.examples.utils;
 
 public final class FelinePercent extends Number {
