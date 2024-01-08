@@ -2,7 +2,7 @@
 
 #To build a package
 
-mvn package
+# mvn package
 
 #To build a image
 
@@ -14,4 +14,4 @@ docker build  -t mammal_demo -f src/main/docker/mammal/Dockerfile .
 
 #List a images
 
-docker images
+# docker images
