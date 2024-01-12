@@ -6,16 +6,19 @@ This project provides a simple structure to demonstrate Observability (especiall
 
 There are several branches:
 
-* main - no Observability
-* micrometer_only - Micrometer Metrics only (Logging Exporter)
-* micrometer_with_prom - Micrometer Metrics with Prometheus
-* manual_tracing - OTel Tracing using manual spans
-* auto_tracing_only - Use of the OTel Java agent to trace automatically
-* auto_otel - All OTel
+* `main` - no Observability
+* `micrometer_only` - Micrometer Metrics only (Logging Exporter)
+* `micrometer_with_prom` - Micrometer Metrics with Prometheus
+* `manual_tracing` - OTel Tracing using manual spans
+* `auto_tracing_only` - Use of the OTel Java agent to trace automatically
+* `otel_metrics_raw_api` - OTel Metrics using the raw API
+* `micrometer_with_otel` - Micrometer Metrics exported to OTel
+* `logging_only` - SLF4J Logging exported to OTel
+* `auto_otel` - All OTel
 
-This document covers the `micrometer_with_prom` branch.
+This document covers the `micrometer_only` branch.
 
-The system of microserives simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
+The system of microservices simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
 
 Output:
 
@@ -34,7 +37,7 @@ The routes are as follows:
 To build the project, use:
 
 ```shell
-mvn clean package
+mvn clean spotless:apply package
 ```
 
 This will generate a shaded JAR that can be picked up by the following steps.
@@ -51,10 +54,9 @@ docker build -t mustelid_demo -f src/main/docker/mustelid/Dockerfile target/
 
 That is, the tag name should match the contents of `docker-compose.yml`
 
-
 ## Running the project
 
-In the deploy directory are a docker-compose YAML file and a collector config.
+In the deploy directory is a docker-compose YAML file.
 
 ```shell
 docker-compose up
