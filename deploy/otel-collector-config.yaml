@@ -1,19 +1,25 @@
 receivers:
-  otlp:
-    protocols:
-      grpc:
-      http:
+    otlp:
+        protocols:
+            grpc:
+            http:
+
+processors:
+    batch:
+        timeout: 10s
 
 exporters:
-  debug:
-    verbosity: detailed
+    logging:
 
 extensions:
-  health_check:
+    health_check:
+    pprof:
+    zpages:
 
 service:
-  extensions: [health_check]
-  pipelines:
-    metrics:
-      receivers: [otlp]
-      exporters: [debug]
+    extensions: [pprof, zpages, health_check]
+    pipelines:
+        metrics:
+            receivers: [otlp]
+            processors: [batch]
+            exporters: [logging]
