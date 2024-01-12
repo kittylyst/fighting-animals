@@ -12,6 +12,7 @@ There are several branches:
 * `manual_tracing` - OTel Tracing using manual spans
 * `auto_tracing_only` - Use of the OTel Java agent to trace automatically
 * `otel_metrics_raw_api` - OTel Metrics using the raw API
+* `micrometer_with_otel` - Micrometer Metrics exported to OTel 
 * `auto_otel` - All OTel
 
 This document covers the `micrometer_with_prom` branch.
