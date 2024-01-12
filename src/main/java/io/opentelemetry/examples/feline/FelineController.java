@@ -1,4 +1,4 @@
-/* Copyright (C) Red Hat 2023 */
+/* Copyright (C) Red Hat 2023-2024 */
 package io.opentelemetry.examples.feline;
 
 import io.micrometer.core.instrument.Counter;
