@@ -8,12 +8,10 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +21,6 @@ public class AnimalController {
       Map.of(
           "mammals", "http://mammal-service:8081/getAnimal",
           "fish", "http://fish-service:8083/getAnimal");
-
-  @Autowired private HttpServletRequest httpServletRequest;
 
   private final Counter battlesTotal;
 
