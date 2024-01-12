@@ -2,7 +2,22 @@
 
 ## Description
 
-This project simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
+This project provides a simple structure to demonstrate Observability (especially distributed traces).
+
+There are several branches:
+
+* `main` - no Observability
+* `micrometer_only` - Micrometer Metrics only (Logging Exporter)
+* `micrometer_with_prom` - Micrometer Metrics with Prometheus
+* `manual_tracing` - OTel Tracing using manual spans
+* `auto_tracing_only` - Use of the OTel Java agent to trace automatically
+* `otel_metrics_raw_api` - OTel Metrics using the raw API
+* `micrometer_with_otel` - Micrometer Metrics exported to OTel
+* `auto_otel` - All OTel
+
+This document covers the `micrometer_with_prom` branch.
+
+The system of microserives simulates a battle between two animals chosen from several different clades of animal. Call `GET /battle` to get a battle that looks like this:
 
 Output:
 
@@ -11,28 +26,20 @@ Output:
 "evil": <animal1>
 }
 
-Each low-level service contains a simple `GET /getAnimal` route, and top-level service calls one of the low-level services
-application's `GET /getAnimal` route for each side (chosen randomly).
+Each low-level service contains a simple `GET /getAnimal` route, and top-level service calls one of the low-level services application's `GET /getAnimal` route for each side (chosen randomly).
 
 The routes are as follows:
 
-On this branch, only automatic OTel tracing via the Java agent is supported.
 
 ## Building the project
 
 To build the project, use:
 
 ```shell
-mvn clean package
+mvn clean spotless:apply package
 ```
 
 This will generate a shaded JAR that can be picked up by the following steps.
-
-For the OTel agent, it will need to be manually copied into the `target/` directory, like this:
-
-```shell
-cp opentelemetry-javaagent.jar target/
-```
 
 The project is deployed using Docker. Each separate subcomponent needs a separate container, they are built like this:
 
@@ -48,11 +55,14 @@ That is, the tag name should match the contents of `docker-compose.yml`
 
 ## Running the project
 
-In the `deploy/` directory are a docker-compose YAML file and a collector config.
+In the deploy directory are a docker-compose YAML file and some Prometheus config.
+
+We also need the OTel agent, which is present as a binary artifact on this branch -- it is not built from source.
 
 ```shell
 docker-compose up
 ```
+
 
 The entrypoint service can then be hit on `:8080`
 
