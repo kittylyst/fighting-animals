@@ -8,6 +8,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
+import io.micrometer.core.instrument.config.MeterFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,21 @@ public class AnimalController {
     this.battlesTotal = this.registry.counter("battles.total");
     this.responseTimer =
         Timer.builder("response.time").description("Response time").register(registry);
+
+    // This next line prevents the internal metrics from being published
+    // We don't actually have any, but it's a nice example
+    this.registry.config().meterFilter(MeterFilter.denyNameStartsWith("internal"));
+
+    // The above filter is equivalent to the following construction
+    //    MeterFilter f = new MeterFilter() {
+    //      @Override
+    //      public MeterFilterReply accept(Meter.Id id) {
+    //        if(id.getName().startsWith("internal")) {
+    //          return MeterFilterReply.DENY;
+    //        }
+    //        return MeterFilterReply.NEUTRAL;
+    //      }
+    //    };
 
     // These next two lines switch on CPU & memory metrics for delivery through Micrometer
     new ProcessorMetrics().bindTo(this.registry);
