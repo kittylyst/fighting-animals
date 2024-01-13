@@ -4,6 +4,7 @@ package io.opentelemetry.examples.animal;
 import static io.opentelemetry.examples.utils.Misc.fetchAnimal;
 
 import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,6 +29,8 @@ public class AnimalController {
 
   private final Timer responseTimer;
 
+  private final DistributionSummary winSummary;
+
   private final MeterRegistry registry;
 
   public AnimalController(MeterRegistry registry) {
@@ -35,8 +39,11 @@ public class AnimalController {
     this.responseTimer =
         Timer.builder("response.time").description("Response time").register(registry);
 
+    // Summarizes the size of the attacker's strength when it wins
+    this.winSummary = registry.summary("attacker.win.size");
+
     // This next line prevents the internal metrics from being published
-    // We don't actually have any, but it's a nice example
+    // We don't actually have any internal metrics, but it's a nice example
     this.registry.config().meterFilter(MeterFilter.denyNameStartsWith("internal"));
 
     // The above filter is equivalent to the following construction
@@ -66,6 +73,23 @@ public class AnimalController {
         };
     battlesTotal.increment();
     return responseTimer.recordCallable(callable);
+  }
+
+  @GetMapping("/fight")
+  public String resolveFight(@RequestParam String attacker, @RequestParam String defender)
+      throws Exception {
+    final String winner;
+    // Defenders strength is taken to be 0.5
+    var attackerStrength = Math.random();
+    if (attackerStrength > 0.5) {
+      winner = attacker;
+      // Add to the distribution summary
+      winSummary.record(attackerStrength);
+    } else {
+      winner = defender;
+    }
+
+    return "{ \"winner\": " + winner + " }";
   }
 
   private String fetchRandomAnimal() throws IOException, InterruptedException {
