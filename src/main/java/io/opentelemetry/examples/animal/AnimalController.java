@@ -13,9 +13,10 @@ import io.micrometer.core.instrument.config.MeterFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,6 +27,8 @@ public class AnimalController {
           "fish", "http://fish-service:8083/getAnimal");
 
   private final Counter battlesTotal;
+
+  private static final Random random = new Random();
 
   private final Timer responseTimer;
 
@@ -75,11 +78,12 @@ public class AnimalController {
     return responseTimer.recordCallable(callable);
   }
 
-  @GetMapping("/fight")
-  public String resolveFight(@RequestParam String attacker, @RequestParam String defender) {
+  @GetMapping("/fight/{a}/{d}")
+  public String resolveFight(
+      @PathVariable("a") String attacker, @PathVariable("a") String defender) {
     final String winner;
     // Defenders strength is taken to be 0.5
-    var attackerStrength = Math.random();
+    var attackerStrength = random.nextDouble();
     if (attackerStrength > 0.5) {
       winner = attacker;
       // Add to the distribution summary
