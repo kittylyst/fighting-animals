@@ -80,7 +80,7 @@ public class AnimalController {
 
   @GetMapping("/fight/{a}/{d}")
   public String resolveFight(
-      @PathVariable("a") String attacker, @PathVariable("a") String defender) {
+      @PathVariable("a") String attacker, @PathVariable("d") String defender) {
     final String winner;
     // Defenders strength is taken to be 0.5
     var attackerStrength = random.nextDouble();
