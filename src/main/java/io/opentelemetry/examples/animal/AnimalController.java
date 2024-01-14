@@ -76,8 +76,7 @@ public class AnimalController {
   }
 
   @GetMapping("/fight")
-  public String resolveFight(@RequestParam String attacker, @RequestParam String defender)
-      throws Exception {
+  public String resolveFight(@RequestParam String attacker, @RequestParam String defender) {
     final String winner;
     // Defenders strength is taken to be 0.5
     var attackerStrength = Math.random();
