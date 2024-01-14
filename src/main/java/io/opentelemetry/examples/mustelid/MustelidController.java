@@ -6,8 +6,6 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class MustelidController {
   private final List<String> MUSTELIDS = List.of("otter", "badger", "marten", "weasel");
   private final Counter numCombatants;
-
-  @Autowired private HttpServletRequest httpServletRequest;
 
   private final MeterRegistry registry;
 
