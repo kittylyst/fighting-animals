@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AnimalController {
-  private static Logger LOGGER = LoggerFactory.getLogger(AnimalController.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AnimalController.class);
 
   private static final Map<String, String> SERVICES =
       Map.of(
