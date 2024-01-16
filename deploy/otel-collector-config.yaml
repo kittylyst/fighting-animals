@@ -7,6 +7,12 @@ receivers:
 processors:
   batch:
 
+exporters:
+  logging/debug:
+    loglevel: debug
+  logging:
+    loglevel: warn
+
 extensions:
   health_check:
 
@@ -16,4 +22,4 @@ service:
     logs:
         receivers: [otlp]
         processors: [batch]
-        exporters: [otlphttp]
+        exporters: [logging]
