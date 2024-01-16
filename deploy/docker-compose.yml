@@ -1,6 +1,17 @@
 version: "2"
 services:
 
+  # Collector
+  otel-collector:
+    image: otel/opentelemetry-collector:0.91.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "13133:13133" # Health_check extension
+      - "4317:4317"   # OTLP gRPC receiver
+      - "55681:55681" # OTLP HTTP receiver alternative port
+
   # Fish service
   fish-service:
     image: fish_demo:latest
