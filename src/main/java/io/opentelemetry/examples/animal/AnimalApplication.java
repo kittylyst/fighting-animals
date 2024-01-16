@@ -4,6 +4,7 @@ package io.opentelemetry.examples.animal;
 import ch.qos.logback.classic.LoggerContext;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;
+import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdk;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -15,6 +16,11 @@ import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 public class AnimalApplication {
+
+  @Bean
+  public OpenTelemetry openTelemetry() {
+    return AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();
+  }
 
   @ConditionalOnClass(LoggerContext.class)
   @ConditionalOnProperty(name = "otel.instrumentation.logback.enabled", matchIfMissing = true)
