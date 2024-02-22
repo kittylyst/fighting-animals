@@ -5,6 +5,7 @@ import static io.opentelemetry.examples.utils.Misc.extractContext;
 import static io.opentelemetry.examples.utils.Misc.serverSpan;
 
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -22,10 +23,12 @@ public class FelineController {
   private final HttpServletRequest httpServletRequest;
 
   private final OpenTelemetry sdk;
+  private final Tracer tracer;
 
   public FelineController(HttpServletRequest httpServletRequest, OpenTelemetry sdk) {
     this.httpServletRequest = httpServletRequest;
     this.sdk = sdk;
+    this.tracer = sdk.getTracer(FelineController.class.getName());
   }
 
   @GetMapping("/getAnimal")
@@ -36,13 +39,7 @@ public class FelineController {
 
     try (var scope = extractedContext.makeCurrent()) {
       // Start a span in the scope of the extracted context.
-      var span =
-          serverSpan(
-              sdk,
-              "/getAnimal",
-              HttpMethod.GET.name(),
-              FelineController.class.getName(),
-              "feline-service:8085");
+      var span = serverSpan(tracer, "/getAnimal", HttpMethod.GET.name(), "feline-service:8085");
 
       try {
         // Random pause

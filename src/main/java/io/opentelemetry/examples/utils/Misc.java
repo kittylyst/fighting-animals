@@ -2,9 +2,9 @@
 package io.opentelemetry.examples.utils;
 
 import io.opentelemetry.api.GlobalOpenTelemetry;
-import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
+import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
 import io.opentelemetry.semconv.SemanticAttributes;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,14 +34,13 @@ public class Misc {
   /**
    * Create a {@link SpanKind#SERVER} span, setting the parent context if available
    *
-   * @param sdk
+   * @param tracer
    * @param path the HTTP path
    * @param method the HTTP method
    * @return the span
    */
-  public static Span serverSpan(
-      OpenTelemetry sdk, String path, String method, String tracerName, String serviceName) {
-    return sdk.getTracer(tracerName)
+  public static Span serverSpan(Tracer tracer, String path, String method, String serviceName) {
+    return tracer
         .spanBuilder(path)
         .setSpanKind(SpanKind.SERVER)
         .setAttribute(SemanticAttributes.HTTP_METHOD, method)

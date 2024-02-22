@@ -6,6 +6,7 @@ import static io.opentelemetry.examples.utils.Misc.serverSpan;
 
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.examples.utils.HttpServletRequestExtractor;
 import io.opentelemetry.examples.utils.Misc;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,10 +29,12 @@ public class MammalController {
   private final HttpServletRequest httpServletRequest;
 
   private final OpenTelemetry sdk;
+  private final Tracer tracer;
 
   public MammalController(HttpServletRequest httpServletRequest, OpenTelemetry sdk) {
     this.httpServletRequest = httpServletRequest;
     this.sdk = sdk;
+    this.tracer = sdk.getTracer(MammalController.class.getName());
   }
 
   @GetMapping("/getAnimal")
@@ -42,13 +45,7 @@ public class MammalController {
 
     try (var scope = extractedContext.makeCurrent()) {
       // Start a span in the scope of the extracted context.
-      var span =
-          serverSpan(
-              sdk,
-              "/getAnimal",
-              HttpMethod.GET.name(),
-              MammalController.class.getName(),
-              "mammal-service:8081");
+      var span = serverSpan(tracer, "/getAnimal", HttpMethod.GET.name(), "mammal-service:8081");
 
       // Send the sub-requests, return the response and end the span
       try {
