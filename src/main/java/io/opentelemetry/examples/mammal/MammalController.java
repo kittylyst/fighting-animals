@@ -27,6 +27,7 @@ public class MammalController {
   private final MeterRegistry registry;
 
   public MammalController(MeterRegistry registry) {
+    System.out.println("Version 2");
     this.registry = registry;
     felinePercent = this.registry.gauge("battles.felinePercent", new FelinePercent(0.5));
 

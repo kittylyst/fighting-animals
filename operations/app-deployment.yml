@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fish-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fish-service
+  template:
+    metadata:
+      labels:
+        app: fish-service
+    spec:
+      containers:
+        - name: fishdemo
+          image: fish_demo
+          ports:
+            - containerPort: 8083
+          imagePullPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mustelid-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mustelid-service
+  template:
+    metadata:
+      labels:
+        app: mustelid-service
+    spec:
+      containers:
+        - name: musteliddemo
+          image: mustelid_demo
+          ports:
+            - containerPort: 8084
+          imagePullPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feline-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feline-service
+  template:
+    metadata:
+      labels:
+        app: feline-service
+    spec:
+      containers:
+        - name: felinedemo
+          image: feline_demo
+          ports:
+            - containerPort: 8085
+          imagePullPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mammal-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mammal-service
+  template:
+    metadata:
+      labels:
+        app: mammal-service
+    spec:
+      containers:
+        - name: mammaldemo
+          image: mammal_demo
+          ports:
+            - containerPort: 8081
+          imagePullPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: animal-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: animal-service
+  template:
+    metadata:
+      labels:
+        app: animal-service
+    spec:
+      containers:
+        - name: animalsdemo
+          image: animals_demo
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Never

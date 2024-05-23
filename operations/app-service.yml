@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fish-service
+spec:
+  selector:
+    app: fish-service
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mustelid-service
+spec:
+  selector:
+    app: mustelid-service
+  ports:
+    - protocol: TCP
+      port: 8084
+      targetPort: 8084
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feline-service
+spec:
+  selector:
+    app: feline-service
+  ports:
+    - protocol: TCP
+      port: 8085
+      targetPort: 8085
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mammal-service
+spec:
+  selector:
+    app: mammal-service
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: animal-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: animal-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
