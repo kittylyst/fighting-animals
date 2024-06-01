@@ -12,6 +12,3 @@ docker build  -t mustelid_demo -f src/main/docker/mustelid/Dockerfile .
 docker build  -t feline_demo -f src/main/docker/feline/Dockerfile .
 docker build  -t mammal_demo -f src/main/docker/mammal/Dockerfile .
 
-#List a images
-
-docker images
