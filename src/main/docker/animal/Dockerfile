@@ -3,5 +3,5 @@ USER root
 RUN mkdir /app
 COPY target/animals-demo-1.0-SNAPSHOT.jar  /app
 WORKDIR /app
-CMD ["java", "-Dotel.service.name=animal-service", "-Dotel.exporter.otlp.endpoint=http://otel-collector:4317/", "-jar" , "animals-demo-1.0-SNAPSHOT.jar"]
+CMD ["java", "-Dotel.service.name=animal-service", "-Dotel.metrics.exporter=none", "-Dotel.exporter.otlp.endpoint=http://otel-collector:4317/", "-jar" , "animals-demo-1.0-SNAPSHOT.jar"]
 
