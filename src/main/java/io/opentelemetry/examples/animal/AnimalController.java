@@ -32,7 +32,7 @@ public class AnimalController {
 
   public AnimalController(OpenTelemetry sdk) {
     this.sdk = sdk;
-    
+
     Meter appMeter = sdk.getMeter(INSTRUMENTATION_SCOPE + ".app");
     this.appMeter = appMeter;
     this.battlesTotal = createCounter(appMeter);
