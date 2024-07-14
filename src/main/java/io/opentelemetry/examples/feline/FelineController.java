@@ -3,8 +3,10 @@ package io.opentelemetry.examples.feline;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +29,12 @@ public class FelineController {
   public String makeBattle() throws InterruptedException {
     // Random pause
     Thread.sleep((int) (20 * Math.random()));
-    // Return random cat
+
+    // Return random cat (and also send to Kafka)
     var cat = CATS.get((int) (CATS.size() * Math.random()));
-    // producer.send("FELINE", cat);
+    var key = UUID.randomUUID().toString();
+    var producerRecord = new ProducerRecord<>("FELINE", key, cat);
+    producer.send(producerRecord);
     return cat;
   }
 }
