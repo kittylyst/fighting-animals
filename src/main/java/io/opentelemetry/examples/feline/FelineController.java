@@ -4,6 +4,8 @@ package io.opentelemetry.examples.feline;
 import java.util.List;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +18,8 @@ public class FelineController {
   public FelineController() {
     Properties properties = new Properties();
     properties.put("bootstrap.servers", "kafka-1:9092"); // PLAINTEXT
+    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     producer = new KafkaProducer<>(properties);
   }
 
