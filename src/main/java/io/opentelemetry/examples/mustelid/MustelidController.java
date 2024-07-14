@@ -3,8 +3,10 @@ package io.opentelemetry.examples.mustelid;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,8 +29,11 @@ public class MustelidController {
   public String makeBattle() throws InterruptedException {
     // Random pause
     Thread.sleep((int) (20 * Math.random()));
-    // Return random mustelid
+    // Return random mustelid (and also send to Kafka)
     var mustelid = MUSTELIDS.get((int) (MUSTELIDS.size() * Math.random()));
+    var key = UUID.randomUUID().toString();
+    var producerRecord = new ProducerRecord<>("MUSTELID", key, mustelid);
+    producer.send(producerRecord);
     return mustelid;
   }
 }
