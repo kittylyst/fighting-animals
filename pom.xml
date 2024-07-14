@@ -18,6 +18,7 @@
     <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
     <google-java-format.version>1.15.0</google-java-format.version>
     <spotless-maven-plugin.version>2.29.0</spotless-maven-plugin.version>
+    <kafka.client.version>3.7.1</kafka.client.version>
     <skip.spotless>false</skip.spotless>
     <spring.boot.mainclass>io.opentelemetry.examples.animal.AnimalApplication</spring.boot.mainclass>
   </properties>
@@ -30,6 +31,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
     </dependency>
   </dependencies>
   <build>
