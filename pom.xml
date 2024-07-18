@@ -38,47 +38,37 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.infinispan</groupId>
+      <artifactId>infinispan-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.infinispan</groupId>
+      <artifactId>infinispan-client-hotrod</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.infinispan</groupId>
+      <artifactId>infinispan-query-dsl</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.infinispan</groupId>
+      <artifactId>infinispan-remote-query-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.infinispan</groupId>
+      <artifactId>infinispan-spring-boot3-starter-remote</artifactId>
+      <version>15.1.0.Dev01</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.kafka</groupId>
       <artifactId>kafka-clients</artifactId>
     </dependency>
 
-    <!-- Quarkus -->
-    <dependency>
-      <groupId>${quarkus.platform.group-id}</groupId>
-      <artifactId>${quarkus.platform.artifact-id}</artifactId>
-      <version>${quarkus.platform.version}</version>
-      <type>pom</type>
-      <scope>compile</scope>
-    </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>io.quarkiverse.loggingsentry</groupId>-->
-    <!--      <artifactId>quarkus-logging-sentry</artifactId>-->
-    <!--      <version>${quarkus-logging-sentry.version}</version>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      <groupId>io.quarkus</groupId>-->
-    <!--      <artifactId>quarkus-resteasy-reactive-jackson</artifactId>-->
-    <!--      <version>${quarkus.platform.version}</version>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      <groupId>io.quarkus</groupId>-->
-    <!--      <artifactId>quarkus-qute</artifactId>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      <groupId>io.quarkus</groupId>-->
-    <!--      <artifactId>quarkus-smallrye-health</artifactId>-->
-    <!--    </dependency>-->
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
-      <version>${quarkus.platform.version}</version>
-    </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>io.quarkus</groupId>-->
-    <!--      <artifactId>quarkus-scheduler</artifactId>-->
-    <!--      <version>${quarkus.platform.version}</version>-->
-    <!--    </dependency>-->
   </dependencies>
   <build>
 
