@@ -58,7 +58,7 @@ That is, the tag name should match the contents of `docker-compose.yml`
 In the `deploy` directory is a docker-compose YAML file.
 
 ```shell
-docker-compose up
+docker compose up
 ```
 
 ## Known Issues
