@@ -8,7 +8,6 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.infinispan.client.hotrod.RemoteCacheManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,15 +17,12 @@ public class FelineController {
 
   private final KafkaProducer<String, String> producer;
 
-  private final RemoteCacheManager cacheManager;
-
-  public FelineController(RemoteCacheManager cacheManager) {
+  public FelineController() {
     Properties properties = new Properties();
     properties.put("bootstrap.servers", "kafka-1:9092"); // PLAINTEXT
     properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     producer = new KafkaProducer<>(properties);
-    this.cacheManager = cacheManager;
   }
 
   @GetMapping("/getAnimal")
