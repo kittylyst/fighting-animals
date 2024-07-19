@@ -34,16 +34,8 @@ public class FelineController {
     // Random pause
     Thread.sleep((int) (20 * Math.random()));
 
-    // Look up last injured animal
-    var injured = cacheManager.getCache("animals").get("FELINE");
-    String cat;
-    do {
-      Thread.sleep(1);
-      cat = CATS.get((int) (CATS.size() * Math.random()));
-      System.out.printf("Looking up uninjured cat - is %s OK?", cat);
-    } while (injured == null || injured.equals(cat));
-
-    // Return random uninjured cat (and also send to Kafka)
+    // Return random cat (and also send to Kafka)
+    var cat = CATS.get((int) (CATS.size() * Math.random()));
     var key = UUID.randomUUID().toString();
     var producerRecord = new ProducerRecord<>("FELINE", key, cat);
     producer.send(producerRecord);
