@@ -10,25 +10,16 @@ services:
     environment:
       - CLUSTER_ID=g4xWbaRgd-b-zQYgIS1rY5
       - NODE_ID=1
-      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
-  kafka-2:
-    image: debezium/kafka:2.7.0.Final
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093
+
+  # Infinispan
+  infinispan-1:
+    image: infinispan/server:15.0.5.Final
     ports:
-      - "29092:9092"
-      - "29093:9093"
+      - "11222:11222"
     environment:
-      - CLUSTER_ID=g4xWbaRgd-b-zQYgIS1rY5
-      - NODE_ID=2
-      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
-  kafka-3:
-    image: debezium/kafka:2.7.0.Final
-    ports:
-      - "39092:9092"
-      - "39093:9093"
-    environment:
-      - CLUSTER_ID=g4xWbaRgd-b-zQYgIS1rY5
-      - NODE_ID=3
-      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+      - USER=xxxxxx
+      - PASS=yyyyyy
 
   # Fish service
   fish-service:
@@ -37,8 +28,6 @@ services:
       - "8083:8083"
     depends_on:
       - kafka-1
-      - kafka-2
-      - kafka-3
   # Mustelid service
   mustelid-service:
     image: mustelid_demo:latest
@@ -46,8 +35,6 @@ services:
       - "8084:8084"
     depends_on:
       - kafka-1
-      - kafka-2
-      - kafka-3
   # Feline service
   feline-service:
     image: feline_demo:latest
@@ -55,8 +42,7 @@ services:
       - "8085:8085"
     depends_on:
       - kafka-1
-      - kafka-2
-      - kafka-3
+      - infinispan-1
   # Mammal service
   mammal-service:
     image: mammal_demo:latest
@@ -64,6 +50,7 @@ services:
       - "8081:8081"
     depends_on:
       - feline-service
+      - fish-service
       - mustelid-service
   # Animal service
   animal-service:
@@ -73,3 +60,14 @@ services:
     depends_on:
       - fish-service
       - mammal-service
+
+  # Hospital
+  hospital-service:
+    image: hospital_demo:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - kafka-1
+      - infinispan-1
+
+
