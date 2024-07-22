@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<distributed-cache name="animals" mode="SYNC" statistics="false">
+    <encoding media-type="application/x-java-object"/>
+    <indexing enabled="false" />
+</distributed-cache>

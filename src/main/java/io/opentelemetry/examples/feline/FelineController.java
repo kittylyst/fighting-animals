@@ -1,6 +1,7 @@
 /* Copyright (C) Red Hat 2023-2024 */
 package io.opentelemetry.examples.feline;
 
+import io.opentelemetry.examples.utils.InfinispanConfiguration;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.infinispan.client.hotrod.RemoteCacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,15 +20,14 @@ public class FelineController {
 
   private final KafkaProducer<String, String> producer;
 
-  private final RemoteCacheManager cacheManager;
+  @Autowired private RemoteCacheManager cacheManager;
 
-  public FelineController(RemoteCacheManager cacheManager) {
+  public FelineController() {
     Properties properties = new Properties();
     properties.put("bootstrap.servers", "kafka-1:9092"); // PLAINTEXT
     properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     producer = new KafkaProducer<>(properties);
-    this.cacheManager = cacheManager;
   }
 
   @GetMapping("/getAnimal")
@@ -35,7 +36,7 @@ public class FelineController {
     Thread.sleep((int) (20 * Math.random()));
 
     // Look up last injured animal
-    var injured = cacheManager.getCache("animals").get("FELINE");
+    var injured = cacheManager.getCache(InfinispanConfiguration.CACHE_NAME).get("FELINE");
     String cat;
     do {
       Thread.sleep(1);
