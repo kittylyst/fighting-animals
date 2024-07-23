@@ -1,9 +1,14 @@
-version: "2"
+version: "3.1"
+networks:
+  mynetwork:
+    driver: bridge
+
 services:
 
   # Kafka
   kafka-1:
     image: debezium/kafka:2.7.0.Final
+    container_name: kafka-1
     ports:
       - "19092:9092"
       - "19093:9093"
@@ -13,65 +18,85 @@ services:
       - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093
 
   # Infinispan
-  infinispan-1:
-    image: infinispan/server:15.0.5.Final
+  infinispan-service:
+    image: infinispan/server:15.0
+    container_name: infinispan
     ports:
       - "11222:11222"
     environment:
       - USER=xxxxxx
       - PASS=yyyyyy
+    networks:
+      - mynetwork
 
   # Fish service
   fish-service:
     image: fish_demo:latest
+    container_name: fish-service
     ports:
       - "8083:8083"
     depends_on:
       - kafka-1
-      - infinispan-1
+      - infinispan-service
+    networks:
+      - mynetwork
+    command: >
+      /bin/sh -c "
+        echo Waiting for Infinispan service start ...;
+        while ! curl --silent --output /dev/null --fail-early --user 'xxxxxx:yyyyyy' http://infinispan:11222/rest/v2/server;
+        do
+          sleep 1;
+        done;
+        echo Infinispan service started!;
+        java -cp animals-demo-1.0-SNAPSHOT.jar -Dloader.main=io.opentelemetry.examples.fish.FishApplication org.springframework.boot.loader.launch.PropertiesLauncher --server.port=8083
+      "
   # Mustelid service
   mustelid-service:
     image: mustelid_demo:latest
     ports:
       - "8084:8084"
     depends_on:
-      - kafka-1
-      - infinispan-1
+      - fish-service
   # Feline service
   feline-service:
     image: feline_demo:latest
+    container_name: feline-service
     ports:
       - "8085:8085"
     depends_on:
-      - kafka-1
-      - infinispan-1
+      - fish-service
+    networks:
+      - mynetwork
   # Mammal service
   mammal-service:
     image: mammal_demo:latest
+    container_name: mammal-service
     ports:
       - "8081:8081"
     depends_on:
       - feline-service
       - fish-service
       - mustelid-service
-      - infinispan-1
+    networks:
+      - mynetwork
   # Animal service
   animal-service:
     image: animals_demo:latest
+    container_name: animal-service
     ports:
       - "8080:8080"
     depends_on:
       - fish-service
       - mammal-service
-      - infinispan-1
-
+    networks:
+      - mynetwork
   # Hospital
   hospital-service:
     image: hospital_demo:latest
+    container_name: hospital-service
     ports:
       - "8000:8000"
     depends_on:
-      - kafka-1
-      - infinispan-1
-
-
+      - fish-service
+    networks:
+      - mynetwork
